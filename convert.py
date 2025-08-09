@@ -12,7 +12,7 @@ def lyx_to_pdf(lyx_file):
             check = False,
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE,
-            text = True
+            text = False
         )
     except subprocess.CalledProcessError as e:
         print("ERROR:", e.stderr)
@@ -21,7 +21,6 @@ def lyx_to_pdf(lyx_file):
 
 # this function converts the pdf to html when given the file path of the pdf
 def pdf_to_html(pdf_file):
-    print(pdf_file)
     doc = PdfDocument()
     doc.LoadFromFile(pdf_file)
     convertOptions = doc.ConvertOptions
@@ -63,4 +62,5 @@ def lyx_to_html(file_name):
         return
     lyx_to_pdf(file_name)
     pdf_to_html(file_name.replace(".lyx", ".pdf"))
+
     clean_html(file_name.replace(".lyx", ".html"))
