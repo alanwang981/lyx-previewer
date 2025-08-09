@@ -8,6 +8,12 @@ from convert import lyx_to_html
 def main():
     try: 
         file_id = "1RSkXkKzzBn--_VCfiSbFAR6Qgq0e3QMM" # this needs to be automated later
+
+        # delete intermediate files to clean up, if there are any
+        save_folder = os.path.abspath("saved_files") # declare save_folder
+        if os.path.exists(save_folder):
+            shutil.rmtree(save_folder)
+            print(f"Deleted folder {save_folder}")
         
         # create a folder and path for files to be stored in
         save_folder = os.path.abspath("saved_files")
@@ -30,11 +36,6 @@ def main():
             webbrowser.open(f"file://{html_path}")
         else:
             print("Conversion failed or HTML file not found.")
-
-        # delete intermediate files to clean up
-        if os.path.exists(save_folder):
-            shutil.rmtree(save_folder)
-            print(f"Deleted folder {save_folder}")
 
     except Exception as e:
         print("Error:", e)

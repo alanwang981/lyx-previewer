@@ -3,6 +3,7 @@ import os
 from spire.pdf import PdfDocument
 from spire.pdf import FileFormat
 
+# this function converts the lyx to pdf when given the file path of the lyx file
 def lyx_to_pdf(lyx_file):
     lyx_path = "C:/Program Files/LyX 2.4/bin/LyX.exe"
     try:
@@ -17,8 +18,10 @@ def lyx_to_pdf(lyx_file):
         print("ERROR:", e.stderr)
     except FileNotFoundError:
         print("LyX not found at:", lyx_path)
-        
+
+# this function converts the pdf to html when given the file path of the pdf
 def pdf_to_html(pdf_file):
+    print(pdf_file)
     doc = PdfDocument()
     doc.LoadFromFile(pdf_file)
     convertOptions = doc.ConvertOptions
@@ -26,6 +29,7 @@ def pdf_to_html(pdf_file):
     doc.SaveToFile(pdf_file.replace(".pdf", ".html"), FileFormat.HTML)
     doc.Dispose()
 
+# this function is for beautifying the HTML output  
 def clean_html(html_file):
     warning = (
         "<tspan xml:space=\"preserve\" style=\"white-space: pre;\" x=\"20\" y=\"20\" "
@@ -51,14 +55,12 @@ def clean_html(html_file):
     
     with open(html_file, "w", encoding = 'utf-8') as file:
         file.write(content)
-    
+
+# this is an overall function that converts the lyx file into the html file given the path of the lyx file
 def lyx_to_html(file_name):
     if not os.path.exists(file_name):
         print("File does not exist!")
         return
     lyx_to_pdf(file_name)
     pdf_to_html(file_name.replace(".lyx", ".pdf"))
-    os.remove(file_name.replace(".lyx", ".pdf"))
     clean_html(file_name.replace(".lyx", ".html"))
-    
-lyx_to_html("ME35 Homework 10 Solutions.lyx")
