@@ -2,6 +2,7 @@ import shutil
 import os
 import webbrowser
 from threading import Thread
+import keyboard
 # get functions from other files
 from getfile import download_drive_file
 from convert import lyx_to_html
@@ -9,7 +10,7 @@ import frontend
 
 def preview():
     try: 
-        file_id = "1RSkXkKzzBn--_VCfiSbFAR6Qgq0e3QMM" # this needs to be automated later
+        file_id = "1RSkXkKzzBn--_VCfiSbFAR6Qgq0e3QMM" # this needs to be automated (pls rootrc I need you)
 
         # delete intermediate files to clean up, if there are any
         save_folder = os.path.abspath("saved_files") # declare save_folder
@@ -37,6 +38,10 @@ def preview():
     except Exception as e:
         print("Error:", e)
 
+def register_hotkey():
+    keyboard.add_hotkey(frontend.user_hotkey, preview) # listen to user_hotkey
+    keyboard.wait()  # keeps program alive listening for hotkey
+
 if __name__ == "__main__":
-    Thread(target=frontend.hotkey, daemon=True).start() # start listening for hotkey
+    Thread(target=register_hotkey, daemon=True).start() # call on the function that listens to hotkey without being blocked by gui
     frontend.launch_gui() # launch the gui for customizing hotkey
