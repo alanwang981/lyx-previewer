@@ -1,11 +1,13 @@
 import shutil
 import os
 import webbrowser
+from threading import Thread
 # get functions from other files
 from getfile import download_drive_file
 from convert import lyx_to_html
+import frontend
 
-def main():
+def preview():
     try: 
         file_id = "1RSkXkKzzBn--_VCfiSbFAR6Qgq0e3QMM" # this needs to be automated later
 
@@ -34,9 +36,7 @@ def main():
 
     except Exception as e:
         print("Error:", e)
-    finally:
-        input("Press Enter to exit...")
 
 if __name__ == "__main__":
-    main()
-
+    Thread(target=frontend.hotkey, daemon=True).start() # start listening for hotkey
+    frontend.launch_gui() # launch the gui for customizing hotkey
