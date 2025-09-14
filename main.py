@@ -11,19 +11,23 @@ def preview(file_ID):
         lyx_file = os.path.join(save_folder, "file.lyx")
 
         # download the file from google drive
+        frontend.set_message("Opening file...")
         getfile.download_drive_file(file_ID, lyx_file)
         # only run the rest if script has permission to file
         if getfile.has_perm: 
             # convert the lyx file to html
+            frontend.set_message("Processing file...")
             lyx_to_html(lyx_file)
             html_path = lyx_file.replace(".lyx", ".html")
 
             # open the html file in browser
             if html_path and os.path.exists(html_path):
                 webbrowser.open(f"file://{html_path}")
-                frontend.result_label.config(text="Preview opened!")
+                frontend.result_label.config(text="Preview opened!", foreground="green")
             else:
-                frontend.displayError("Conversion failed or HTML file not found.")
+                frontend.displayError(text="Conversion failed or HTML file not found.")
+        else:
+            frontend.displayError(text="No file permission.")
 
     except Exception as e:
         frontend.displayError(e)
