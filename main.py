@@ -5,9 +5,6 @@ import frontend, getfile
 
 def preview(file_ID):
     try: 
-        # file_id = "1RSkXkKzzBn--_VCfiSbFAR6Qgq0e3QMM"
-        # file_id = "1Ea4MbDYk9xCW7zyRyftKw_y0NuRZneQj"
-
         # create a folder and path for files to be stored in
         save_folder = os.path.abspath("saved_files") 
         os.makedirs(save_folder, exist_ok=True)
@@ -32,4 +29,5 @@ def preview(file_ID):
         frontend.displayError(e)
 
 if __name__ == "__main__":
+
     frontend.launch_gui() # launch the GUI for the program
