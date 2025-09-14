@@ -1,42 +1,42 @@
-import tkinter
-import keyboard
-from main import preview
-
-# Global variables
-user_hotkey = "ctrl+alt+g"  # default hotkey
-status_label = None
+import tkinter, re
 
 def launch_gui():
 
-    # Create the GUI window
+    # create the GUI window
     root = tkinter.Tk()
     root.title("LyX-Previewer")
-    root.geometry("300x150")
+    root.geometry("500x300")
 
-    # Create the user interaction button
-    tkinter.Label(root, text="Click the button and press your hotkey:").pack(pady=5)
-    tkinter.Button(root, text="Set Hotkey", command=set_hotkey).pack(pady=5)
-    
-    # Display for the current hotkey
-    global status_label
-    status_label = tkinter.Label(root, text="Default hotkey: ctrl+alt+g")
-    status_label.pack(pady=10)
+    # add the URL input widget
+    tkinter.Label(root, text="Paste Google Drive URL here:").pack(pady=5)
+    global url_entry
+    url_entry = tkinter.Entry(root, width=60)
+    url_entry.pack(pady=5)
 
-    # Register default hotkey
-    register_hotkey()
-    # Run the GUI loop
+    # add button that launches preview
+    preview_button = tkinter.Button(root, text="Preview File", command=extract_file_id)
+    preview_button.pack(pady=10)
+
+    # label to show result
+    global result_label
+    result_label = tkinter.Label(root, text="Waiting for input...")
+    result_label.pack(pady=10)
+
+    # run the GUI loop
     root.mainloop()
 
-def set_hotkey():
-    global status_label
-    global user_hotkey
-    status_label.config(text="Press the hotkey combination now...")
-    status_label.update()  # refresh the label to show the message
-    user_hotkey = keyboard.read_hotkey(suppress=False)  # blocks until user presses a combination
-    keyboard.unhook_all_hotkeys()  # remove previous hotkeys
-    register_hotkey()
-    status_label.config(text=f"Hotkey set to: {user_hotkey}") # update the display
+def extract_file_id():
+    global file_ID
+    url = url_entry.get().strip()
+    match = re.search(r"(?:/d/|id=)([a-zA-Z0-9_-]+)", url)
+    if match:
+        file_ID = match.group(1)
+        from main import preview
+        preview(file_ID)
+    else:
+        file_ID = None
+        displayError("Not a valid Google Drive URL")
 
-def register_hotkey():
-    global user_hotkey
-    keyboard.add_hotkey(user_hotkey, preview) # add user_hotkey
+def displayError(err):
+    global result_label
+    result_label.config(text="Error: "+err)

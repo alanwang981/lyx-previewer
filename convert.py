@@ -2,6 +2,7 @@ import subprocess
 import os
 from spire.pdf import PdfDocument
 from spire.pdf import FileFormat
+from frontend import displayError
 
 # this function converts the lyx to pdf when given the file path of the lyx file
 def lyx_to_pdf(lyx_file):
@@ -15,9 +16,9 @@ def lyx_to_pdf(lyx_file):
             text = False
         )
     except subprocess.CalledProcessError as e:
-        print("ERROR:", e.stderr)
+        displayError(e.stderr)
     except FileNotFoundError:
-        print("LyX not found at:", lyx_path)
+        displayError("LyX not found at: "+lyx_path)
 
 # this function converts the pdf to html when given the file path of the pdf
 def pdf_to_html(pdf_file):
@@ -58,7 +59,7 @@ def clean_html(html_file):
 # this is an overall function that converts the lyx file into the html file given the path of the lyx file
 def lyx_to_html(file_name):
     if not os.path.exists(file_name):
-        print("File does not exist!")
+        displayError("File does not exist!")
         return
     lyx_to_pdf(file_name)
     pdf_to_html(file_name.replace(".lyx", ".pdf"))
