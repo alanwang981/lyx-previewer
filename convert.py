@@ -27,7 +27,7 @@ def pdf_to_html(pdf_file):
     convertOptions = doc.ConvertOptions
     convertOptions.SetPdfToHtmlOptions(True, True, 1, True)
     doc.SaveToFile(pdf_file.replace(".pdf", ".html"), FileFormat.HTML)
-    doc.Dispose()
+    doc.Close()
 
 # this function is for beautifying the HTML output  
 def clean_html(html_file):
