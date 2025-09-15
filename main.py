@@ -1,6 +1,6 @@
 import os, webbrowser
 # get functions from other files
-from convert import lyx_to_html
+from convert import lyx_to_xhtml
 import frontend, getfile
 
 def preview(file_ID):
@@ -17,7 +17,7 @@ def preview(file_ID):
         if getfile.has_perm: 
             # convert the lyx file to html
             frontend.set_message("Processing file...")
-            lyx_to_html(lyx_file)
+            lyx_to_xhtml(lyx_file)
             html_path = lyx_file.replace(".lyx", ".html")
 
             # open the html file in browser
