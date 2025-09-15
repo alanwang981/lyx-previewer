@@ -22,16 +22,14 @@ def preview(file_ID):
 
             # open the html file in browser
             if html_path and os.path.exists(html_path):
-                webbrowser.open(f"file://{html_path}")
                 frontend.result_label.config(text="Preview opened!", foreground="green")
+                webbrowser.open(f"file://{html_path}")
             else:
                 frontend.displayError(text="Conversion failed or HTML file not found.")
         else:
             frontend.displayError(text="No file permission.")
-
     except Exception as e:
         frontend.displayError(e)
 
 if __name__ == "__main__":
-
     frontend.launch_gui() # launch the GUI for the program
