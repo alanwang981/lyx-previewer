@@ -80,4 +80,4 @@ def extract_file_id():
         result_label.config(text="Please enter a valid URL.", foreground="red")
 
 def displayError(err):
-    result_label.config(text="Error: " + str(err), foreground="red")
+    result_label.config(text="Error: " + err, foreground="red")

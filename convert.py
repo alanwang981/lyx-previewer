@@ -13,6 +13,6 @@ def lyx_to_xhtml(lyx_file):
             text = False
         )
     except subprocess.CalledProcessError as e:
-        displayError(e.stderr)
+        displayError(str(e.stderr))
     except FileNotFoundError:
         displayError("LyX not found at: "+lyx_path)
