@@ -1,5 +1,6 @@
 # LyX Previewer
 LyX Previewer is a Python-based GUI application that fetches `.lyx` files from Google Drive, converts them to HTML, and renders output to a web browser, eliminating manual conversion for previewing files.
+![Photo of GUI](https://github.com/alanwang981/lyx-previewer/blob/main/Figure%201.png)
 ## Features
 - Connects to Google Drive to retrieve LyX files
 - Converts LyX files to HTML format
